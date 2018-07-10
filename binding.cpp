@@ -3,10 +3,11 @@
 #include <readdy/model/potentials/PotentialOrder2.h>
 
 namespace py = pybind11;
+using ParticleType = readdy::model::Particle::type_type;
 
 class TestPotential : public readdy::model::potentials::PotentialOrder1{
 public:
-    explicit TestPotential(particle_type_type ptype) : PotentialOrder1(ptype) {}
+    explicit TestPotential(ParticleType ptype) : PotentialOrder1(ptype) {}
 
     std::string describe() const override {
         return "Test potential of order 1";
@@ -30,7 +31,7 @@ public:
 
 class MyPairPotential : public readdy::model::potentials::PotentialOrder2 {
 public:
-    MyPairPotential(particle_type_type type1, particle_type_type type2, readdy::scalar cutoff)
+    MyPairPotential(ParticleType type1, ParticleType type2, readdy::scalar cutoff)
             : PotentialOrder2(type1, type2), cutoff(cutoff) {}
 
     std::string describe() const override {
@@ -63,8 +64,9 @@ private:
 PYBIND11_MODULE (mypot, m) {
     py::module::import("readdy");
     py::class_<TestPotential, readdy::model::potentials::PotentialOrder1>(m, "MyExternalPotential")
-            .def(py::init<readdy::particle_type_type>());
+            .def(py::init<ParticleType>());
     py::class_<MyPairPotential, readdy::model::potentials::PotentialOrder2>(m, "MyPairPotential")
-            .def(py::init<readdy::particle_type_type, readdy::particle_type_type, readdy::scalar>());
+            .def(py::init<ParticleType, ParticleType, readdy::scalar>());
 }
+
 
