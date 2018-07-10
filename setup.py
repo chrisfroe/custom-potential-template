@@ -69,10 +69,10 @@ class CMakeBuild(build_ext):
 
 
 setup(
-    name='custom_potential_example',
+    name='mypot',
     version='0.0.1',
-    author='Moritz Hoffmann',
-    ext_modules=[CMakeExtension('custom_potential_example')],
+    author='Moritz Hoffmann, Christoph Fröhner',
+    ext_modules=[CMakeExtension('mypot')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )
