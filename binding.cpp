@@ -5,9 +5,9 @@
 namespace py = pybind11;
 using ParticleType = readdy::model::Particle::type_type;
 
-class TestPotential : public readdy::model::potentials::PotentialOrder1{
+class MyExternalPotential : public readdy::model::potentials::PotentialOrder1{
 public:
-    explicit TestPotential(ParticleType ptype) : PotentialOrder1(ptype) {}
+    explicit MyExternalPotential(ParticleType ptype) : PotentialOrder1(ptype) {}
 
     std::string describe() const override {
         return "Test potential of order 1";
@@ -63,7 +63,7 @@ private:
 
 PYBIND11_MODULE (mypot, m) {
     py::module::import("readdy");
-    py::class_<TestPotential, readdy::model::potentials::PotentialOrder1>(m, "MyExternalPotential")
+    py::class_<MyExternalPotential, readdy::model::potentials::PotentialOrder1>(m, "MyExternalPotential")
             .def(py::init<ParticleType>());
     py::class_<MyPairPotential, readdy::model::potentials::PotentialOrder2>(m, "MyPairPotential")
             .def(py::init<ParticleType, ParticleType, readdy::scalar>());
